@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import '../public/css/index.css'
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (

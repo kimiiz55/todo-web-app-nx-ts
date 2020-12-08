@@ -27,10 +27,10 @@ const Index = () => {
 
   return (
     <>
-      <h1>Todos</h1>
-      <ul>
+      <h1 className="text-lg text-gray-900">Todos</h1>
+      <ul className="flex flex-col space-y-2">
         {todos.map((t) => (
-          <li className={'todo'}>{t.title}</li>
+          <li className="px-4 py-2 border border-gray-300 rounded-md">{t.title}</li>
         ))}
       </ul>
       <button id={'add-todo'} onClick={addTodo}>
