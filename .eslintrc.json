@@ -1,9 +1,8 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
-  "overrides": [
-    {
+  "plugins": ["@typescript-eslint", "@nrwl/nx"],
+  "overrides": [{
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
@@ -11,9 +10,10 @@
           {
             "enforceBuildableLibDependency": true,
             "allow": [],
-            "depConstraints": [
-              { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }
-            ]
+            "depConstraints": [{
+              "sourceTag": "*",
+              "onlyDependOnLibsWithTags": ["*"]
+            }]
           }
         ]
       }
@@ -21,8 +21,22 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
-      "parserOptions": { "project": "./tsconfig.*?.json" },
-      "rules": {}
+      "parserOptions": {
+        "project": "./tsconfig.*?.json"
+      },
+      "rules": {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "interface",
+            "format": ["PascalCase"],
+            "custom": {
+              "regex": "^I[A-Z]",
+              "match": true
+            }
+          }
+        ]
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
