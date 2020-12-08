@@ -4,3 +4,8 @@ export interface ITask {
   dueDate: Date
   isCompleted: boolean
 }
+
+export interface ICreateTaskDto {
+  title: string;
+  dueDate: Date
+}
