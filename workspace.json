@@ -71,6 +71,7 @@
           "builder": "@nrwl/next:server",
           "options": {
             "buildTarget": "web:build",
+            "proxyConfig": "apps/web/proxy.conf.json",
             "dev": true
           },
           "configurations": {
