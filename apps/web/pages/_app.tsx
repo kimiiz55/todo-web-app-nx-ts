@@ -10,7 +10,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
         <title>Welcome to Todo!</title>
       </Head>
       <div className="app">
-        <main>
+        <main className="container mx-auto">
           <Component {...pageProps} />
         </main>
       </div>

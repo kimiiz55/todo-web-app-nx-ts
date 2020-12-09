@@ -35,6 +35,9 @@
     },
     "shared-interfaces": {
       "tags": []
+    },
+    "test-utils": {
+      "tags": []
     }
   }
 }

@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@todos/shared/interfaces": ["libs/shared/interfaces/src/index.ts"]
+      "@todos/shared/interfaces": ["libs/shared/interfaces/src/index.ts"],
+      "@todos/test-utils": ["libs/test-utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

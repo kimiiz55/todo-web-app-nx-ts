@@ -6,13 +6,16 @@ export type TaskDocument = Task & Document;
 
 @Schema()
 export class Task implements ITask {
+
+  _id: string
+
   @Prop({ required: true })
   title: string;
 
   @Prop()
   dueDate: Date;
 
-  @Prop()
+  @Prop({ default: false})
   isCompleted: boolean;
 }
 
