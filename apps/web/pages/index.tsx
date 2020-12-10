@@ -1,41 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { ITask } from '@todos/shared/interfaces';
+import { Task } from '../components/Task';
+import { AddTaskButton } from '../components/AddTaskButton';
 
 const Index = () => {
-  const [todos, setTodos] = useState<ITask[]>([]);
+  const [tasks, setTasks] = useState<ITask[]>([]);
 
   useEffect(() => {
     fetch('/api/tasks')
       .then((_) => _.json())
-      .then(setTodos);
+      .then(setTasks);
   }, []);
-
-  function addTodo() {
-    fetch('/api/tasks', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: 'test',
-        dueDate: new Date()
-      })
-    })
-      .then((_) => _.json())
-      .then((newTodo) => {
-        setTodos([...todos, newTodo]);
-      });
-  }
 
   return (
     <>
       <h1 className="text-lg text-gray-900">Todos</h1>
-      <ul className="flex flex-col space-y-2">
-        {todos.map((t) => (
-          <li className="px-4 py-2 border border-gray-300 rounded-md">{t.title}</li>
-        ))}
-      </ul>
-      <button id={'add-todo'} onClick={addTodo}>
-        Add Todo
-      </button>
+      <div className="px-4">
+        <ul className="flex flex-col space-y-2">
+          {tasks.map((task) => (
+            <Task task={task} key={task._id} />
+          ))}
+        </ul>
+        <div className="fixed bottom-4 block left-1/2 right-1/2">
+          <div className="flex items-center justify-center">
+            <AddTaskButton />
+          </div>
+        </div>
+      </div>
     </>
   );
 };
