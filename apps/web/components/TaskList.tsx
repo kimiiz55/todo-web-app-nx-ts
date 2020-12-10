@@ -9,11 +9,11 @@ export const TaskList = () => {
   if (!tasks) {
     return (
       <ul className="flex flex-col space-y-2">
-        <div className="px-4 py-2 rounded-md shadow-sm cursor-pointer h-12 animate-pulse bg-gray-100" />
-        <div className="px-4 py-2 rounded-md shadow-sm cursor-pointer h-12 animate-pulse bg-gray-100" />
-        <div className="px-4 py-2 rounded-md shadow-sm cursor-pointer h-12 animate-pulse bg-gray-100" />
-        <div className="px-4 py-2 rounded-md shadow-sm cursor-pointer h-12 animate-pulse bg-gray-100" />
-        <div className="px-4 py-2 rounded-md shadow-sm cursor-pointer h-12 animate-pulse bg-gray-100" />
+        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
       </ul>
     );
   }

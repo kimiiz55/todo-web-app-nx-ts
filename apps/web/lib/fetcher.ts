@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fetch from 'isomorphic-unfetch'
 
-export const fetcher = (...args) => {
-
-  return fetch(...args).then((res) => res.json());
-};
+export  async function fetcher<JSON = any>(
+  input: RequestInfo,
+  init?: RequestInit
+): Promise<JSON> {
+  const res = await fetch(input, init)
+  return res.json()
+}

@@ -4,6 +4,7 @@ import { useAppDispatch } from '../context/app';
 import { FORM_TYPE } from '../reducers/form';
 import { mutate } from 'swr';
 import classNames from 'classNames';
+import { mutateDeleteTask, mutateUpdateTask } from '../lib/mutate';
 
 interface IProps {
   task: ITask;
@@ -72,35 +73,20 @@ export const Task: React.FC<IProps> = ({ task }) => {
   const handleCheck = async (e) => {
     e.stopPropagation(); // Prevents further propagation of the current event in the bubbling phase
 
-    mutate('/api/tasks', async (tasks: ITask[]) => {
-      // let's update the task with ID ${_id} to be completed,
-      // this API returns the updated data
-      const updatedTask = await fetch(`/api/tasks/${task._id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isCompleted: true }),
-      });
-
-      // filter the list, and return it with the updated item
-      const filteredTasks = tasks.filter((t) => t._id !== task._id);
-      return [...filteredTasks, updatedTask];
-    });
+    mutate('/api/tasks', async (tasks: ITask[]) =>
+      mutateUpdateTask(tasks, {
+        taskId: task._id,
+        formData: { isCompleted: true },
+      })
+    );
   };
 
   const handleDelete = async (e) => {
     e.stopPropagation(); // Prevents further propagation of the current event in the bubbling phase
 
-    mutate('/api/tasks', async (tasks: ITask[]) => {
-      // let's update the task with ID ${_id} to be completed,
-      // this API returns the updated data
-      const updatedTask = await fetch(`/api/tasks/${task._id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      // filter the list, and return it with the updated item
-      return tasks.filter((t) => t._id !== task._id);
-    });
+    mutate('/api/tasks', async (tasks: ITask[]) =>
+      mutateDeleteTask(tasks, { taskId: task._id })
+    );
   };
 
   return (

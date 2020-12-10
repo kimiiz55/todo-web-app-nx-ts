@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Transition } from '@headlessui/react';
 import { componentWillAppendToBody } from 'react-append-to-body';
 import { useAppContext, useAppDispatch } from '../context/app';
-import { FORM_TYPE } from '../reducers/form';
+import { FORM_METHOD, FORM_TYPE } from '../reducers/form';
 import { useForm } from 'react-hook-form';
-import { mutate } from 'swr';
 import { ITask } from '@todos/shared/interfaces';
+import dayjs from 'dayjs';
+import { mutate } from 'swr';
+import { mutateCreateTask, mutateUpdateTask } from '../lib/mutate';
 
 interface IFormData {
+  _id?: string;
   title: string;
   dueDate: Date;
 }
@@ -18,28 +21,36 @@ const FormModal = () => {
 
   const { register, handleSubmit, errors, reset } = useForm<IFormData>({
     defaultValues: {
+      _id: null,
       title: '',
       dueDate: null,
     },
   });
 
-  const addTodo = (data: IFormData) => {
-    mutate('/api/tasks', async (tasks: ITask[]) => {
-      // let's update the task with ID ${_id} to be completed,
-      // this API returns the updated data
-      const newTask = await fetch('/api/tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+  useEffect(() => {
+    const fetchData = () => {
+      fetch(`/api/tasks/${form._id}`)
+        .then((r) => r.json())
+        .then((d) =>
+          reset({ ...d, dueDate: dayjs(d.dueDate).format('YYYY-MM-DD') })
+        );
+    };
 
-      return [newTask, ...tasks];
+    if (form._id) {
+      fetchData();
+    }
+  }, [form._id, reset]);
+
+  const onSubmit = (formData: IFormData) => {
+    mutate('/api/tasks', async (tasks: ITask[]) => {
+      if (form.method === FORM_METHOD.UPDATE) {
+        return mutateUpdateTask(tasks, { taskId: form._id, formData });
+      }
+      return mutateCreateTask(tasks, formData);
     }).then(() => {
       dispatch({ type: FORM_TYPE.CLOSE });
     });
   };
-
-  const onSubmit = (data) => addTodo(data);
 
   return (
     <Transition show={form.isOpen} className="fixed inset-0">
@@ -83,7 +94,7 @@ const FormModal = () => {
           <hr className="border-t border-gray-200 w-full" />
           <div className="grid grid-cols-1 gap-6 mx-4 py-8">
             <label className="block">
-              <span className="text-gray-700">Email address</span>
+              <span className="text-gray-700">Name of the task</span>
               <input
                 type="text"
                 name="title"
@@ -91,18 +102,26 @@ const FormModal = () => {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="john@example.com"
               />
-              {errors.title && <span className="text-base text-red-400">This field is required</span>}
+              {errors.title && (
+                <span className="text-base text-red-400">
+                  This field is required
+                </span>
+              )}
             </label>
             {/* include validation with required or other standard HTML validation rules */}
             <label className="block">
-              <span className="text-gray-700">Email address</span>
+              <span className="text-gray-700">I want to do this task on</span>
               <input
                 type="date"
                 name="dueDate"
                 ref={register({ required: true })}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
-              {errors.dueDate && <span className="text-base text-red-400">This field is required</span>}
+              {errors.dueDate && (
+                <span className="text-base text-red-400">
+                  This field is required
+                </span>
+              )}
             </label>
           </div>
         </Transition.Child>
