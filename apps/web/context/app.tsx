@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Dispatch, useReducer } from 'react';
 import { reducer, InitialState, initialState } from '../reducers';
+import { FormActions } from '../reducers/form';
 import { LoaderActions } from '../reducers/loader';
 
-export type AppDispatchType = Dispatch<LoaderActions>;
+export type AppDispatchType = Dispatch<LoaderActions | FormActions>;
 
 export const StateContext = React.createContext<InitialState>(initialState);
 StateContext.displayName = 'AppStateContext';

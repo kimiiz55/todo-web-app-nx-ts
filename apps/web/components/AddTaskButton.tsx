@@ -1,25 +1,29 @@
 import React from 'react';
+import { useAppDispatch } from '../context/app';
+import { FORM_TYPE } from '../reducers/form';
 
 export const AddTaskButton = () => {
-  const addTodo = () => {
-    fetch('/api/tasks', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: 'พาน้องแมวไปเดินเล่น',
-        dueDate: new Date(),
-      }),
-    })
-      .then((_) => _.json())
-      .then((newTodo) => {
-        // setTasks((prev) => [...prev, newTodo]);
-      });
-  };
+  // const addTodo = () => {
+  //   fetch('/api/tasks', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       title: 'พาน้องแมวไปเดินเล่น',
+  //       dueDate: new Date(),
+  //     }),
+  //   })
+  //     .then((_) => _.json())
+  //     .then((newTodo) => {
+  //       // setTasks((prev) => [...prev, newTodo]);
+  //     });
+  // };
+
+  const dispatch = useAppDispatch();
 
   return (
     <div
       className=" w-16 h-16 p-3  inline-flex items-center justify-cent text-white bg-blue-500 hover:bg-blue-700 rounded-full cursor-pointer"
-      onClick={addTodo}
+      onClick={() => dispatch({ type: FORM_TYPE.OPEN_CREATE })}
     >
       <svg
         className="w-10 h-10"

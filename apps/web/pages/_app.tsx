@@ -3,6 +3,11 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../public/css/index.css';
 import { AppProvider } from '../context/app';
+import dynamic from 'next/dynamic';
+
+const FormModal = dynamic(() => import('../components/FormModal'), {
+  ssr: false,
+});
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,6 +20,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </main>
       </div>
+      <FormModal />
     </AppProvider>
   );
 }

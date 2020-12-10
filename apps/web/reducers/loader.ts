@@ -1,4 +1,5 @@
 import { ActionMap } from './common';
+import { FormActions } from './form';
 
 export enum LOADER_TYPE {
   OPEN = 'OPEN_LOADER',
@@ -22,7 +23,7 @@ export type LoaderState = typeof loaderInitialState;
 
 export const loaderReducer = (
   state: LoaderState,
-  action: LoaderActions
+  action: LoaderActions | FormActions
 ): LoaderState => {
   switch (action.type) {
     case LOADER_TYPE.OPEN:
