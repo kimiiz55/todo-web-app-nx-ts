@@ -40,6 +40,7 @@
     "react-dom": "17.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.5",
+    "swr": "^0.3.9",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

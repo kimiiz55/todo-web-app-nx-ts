@@ -14,7 +14,6 @@ export enum FORM_METHOD {
 
 interface IOpenUpdatePayload {
   _id: string;
-  method: FORM_METHOD;
 }
 
 type FormPayload = {
@@ -43,9 +42,9 @@ export const formReducer = (
 ): FormState => {
   switch (action.type) {
     case FORM_TYPE.OPEN_CREATE:
-      return { isOpen: true, _id: null, method: null };
+      return { isOpen: true, _id: null, method: FORM_METHOD.CREATE };
     case FORM_TYPE.OPEN_UPDATE:
-      return { isOpen: true, _id: state._id, method: state.method };
+      return { isOpen: true, _id: state._id, method: FORM_METHOD.UPDATE };
     case FORM_TYPE.CLOSE:
       return { isOpen: false, _id: null, method: null };
     default:

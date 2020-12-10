@@ -29,7 +29,7 @@ const FormModal = () => {
           <div className="sticky top-0 bg-white px-4 py-3">
             <div className="flex items-center">
               <div className="text-lg text-mine-shaft-500 font-semibold">
-                title
+                {form.method}
               </div>
               <div
                 className="ml-auto text-gray-700 w-10 h-10 inline-flex items-center justify-cent hover:bg-gray-100 p-1 rounded-full cursor-pointer "
