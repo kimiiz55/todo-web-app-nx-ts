@@ -32,8 +32,6 @@ export class TaskController {
 
   @Patch(':id')
   async update(@Body() dto: CreateOrUpdateTaskDto, @Param('id') id: string) {
-
-    console.log(dto)
     return this.taskService.update(id, dto);
   }
 

@@ -72,60 +72,60 @@ export const Task: React.FC<IProps> = ({ task }) => {
   const handleCheck = async (e) => {
     e.stopPropagation(); // Prevents further propagation of the current event in the bubbling phase
 
-    // update the local data immediately, but disable the revalidation
-    // mutate('/api/tasks', { ...data, name: newName }, false)
+    mutate('/api/tasks', async (tasks: ITask[]) => {
+      // let's update the task with ID ${_id} to be completed,
+      // this API returns the updated data
+      const updatedTask = await fetch(`/api/tasks/${task._id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isCompleted: true }),
+      });
 
-    mutate(
-      '/api/tasks',
-
-      async (tasks: ITask[]) => {
-        // let's update the task with ID ${_id} to be completed,
-        // this API returns the updated data
-        const updatedTask = await fetch(`/api/tasks/${task._id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ isCompleted: true }),
-        });
-
-        // filter the list, and return it with the updated item
-        const filteredTasks = tasks.filter((t) => t._id !== task._id);
-        return [...filteredTasks, updatedTask];
-      }
-    );
+      // filter the list, and return it with the updated item
+      const filteredTasks = tasks.filter((t) => t._id !== task._id);
+      return [...filteredTasks, updatedTask];
+    });
   };
 
   const handleDelete = async (e) => {
     e.stopPropagation(); // Prevents further propagation of the current event in the bubbling phase
-    // mutate(
-    //   '/api/tasks',
-    //   await fetch(`/api/tasks/${task._id}`, {
-    //     method: 'PATCH',
-    //     body: JSON.stringify({ isCompleted: true }),
-    //   })
-    // );
+
+    mutate('/api/tasks', async (tasks: ITask[]) => {
+      // let's update the task with ID ${_id} to be completed,
+      // this API returns the updated data
+      const updatedTask = await fetch(`/api/tasks/${task._id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      // filter the list, and return it with the updated item
+      return tasks.filter((t) => t._id !== task._id);
+    });
   };
 
   return (
     <li
       className={classNames(
-        'px-4 py-2 border border-gray-200 rounded-md shadow-sm h-16',
+        'px-4 py-2 border border-gray-200 rounded-md shadow-sm h-16 transition-all',
         {
           ' cursor-pointer hover:shadow-md': !task.isCompleted,
         }
       )}
-      onClick={() =>
-        dispatch({ type: FORM_TYPE.OPEN_UPDATE, payload: { _id: task._id } })
-      }
+      onClick={() => {
+        if (!task.isCompleted) {
+          dispatch({ type: FORM_TYPE.OPEN_UPDATE, payload: { _id: task._id } });
+        }
+      }}
     >
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row justify-between items-center flex-1">
         <p
-          className={classNames('text-lg', {
+          className={classNames('text-lg truncate', {
             'text-green-500 line-through': task.isCompleted,
           })}
         >
           {task.title}
         </p>
-        <div className="flex flex-row space-x-2">
+        <div className="flex flex-row space-x-2 flex-none">
           <span
             className={classNames({
               hidden: !task.isCompleted,

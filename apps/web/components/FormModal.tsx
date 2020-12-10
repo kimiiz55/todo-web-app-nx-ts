@@ -3,21 +3,51 @@ import { Transition } from '@headlessui/react';
 import { componentWillAppendToBody } from 'react-append-to-body';
 import { useAppContext, useAppDispatch } from '../context/app';
 import { FORM_TYPE } from '../reducers/form';
+import { useForm } from 'react-hook-form';
+import { mutate } from 'swr';
+import { ITask } from '@todos/shared/interfaces';
 
-interface IProps {
-  handleClose: () => void;
-  isOpen: boolean;
+interface IFormData {
+  title: string;
+  dueDate: Date;
 }
 
 const FormModal = () => {
   const { form } = useAppContext();
   const dispatch = useAppDispatch();
 
+  const { register, handleSubmit, errors, reset } = useForm<IFormData>({
+    defaultValues: {
+      title: '',
+      dueDate: null,
+    },
+  });
+
+  const addTodo = (data: IFormData) => {
+    mutate('/api/tasks', async (tasks: ITask[]) => {
+      // let's update the task with ID ${_id} to be completed,
+      // this API returns the updated data
+      const newTask = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      return [newTask, ...tasks];
+    }).then(() => {
+      dispatch({ type: FORM_TYPE.CLOSE });
+    });
+  };
+
+  const onSubmit = (data) => addTodo(data);
+
   return (
     <Transition show={form.isOpen} className="fixed inset-0">
-      <div className="flex flex-col items-center justify-center min-h-screen text-center">
+      <form
+        className="flex flex-col items-center justify-center min-h-screen text-center"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Transition.Child
-          appear={true}
           enter="transition ease-in-expo duration-300"
           enterFrom="transform  translate-y-full"
           enterTo="transform translate-y-0"
@@ -29,7 +59,7 @@ const FormModal = () => {
           <div className="sticky top-0 bg-white px-4 py-3">
             <div className="flex items-center">
               <div className="text-lg text-mine-shaft-500 font-semibold">
-                {form.method}
+                {form.method} TASK
               </div>
               <div
                 className="ml-auto text-gray-700 w-10 h-10 inline-flex items-center justify-cent hover:bg-gray-100 p-1 rounded-full cursor-pointer "
@@ -51,10 +81,32 @@ const FormModal = () => {
             </div>
           </div>
           <hr className="border-t border-gray-200 w-full" />
-          asdasd
+          <div className="grid grid-cols-1 gap-6 mx-4 py-8">
+            <label className="block">
+              <span className="text-gray-700">Email address</span>
+              <input
+                type="text"
+                name="title"
+                ref={register({ required: true })}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                placeholder="john@example.com"
+              />
+              {errors.title && <span className="text-base text-red-400">This field is required</span>}
+            </label>
+            {/* include validation with required or other standard HTML validation rules */}
+            <label className="block">
+              <span className="text-gray-700">Email address</span>
+              <input
+                type="date"
+                name="dueDate"
+                ref={register({ required: true })}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              />
+              {errors.dueDate && <span className="text-base text-red-400">This field is required</span>}
+            </label>
+          </div>
         </Transition.Child>
         <Transition.Child
-          appear={true}
           enter="transition ease-in-expo duration-200"
           enterFrom="transform opacity-75 translate-y-20"
           enterTo="transform opacity-100 translate-y-0"
@@ -63,11 +115,14 @@ const FormModal = () => {
           leaveTo="transform opacity-75 translate-y-20"
           className="fixed bottom-0 w-screen lg:w-3/4 lg:max-w-lg px-4 py-4 border-t border-gray-200 bg-white z-20"
         >
-          <button className="bg-blue-500 text-white text-2xl px-16 py-2 rounded-md">
+          <button
+            className="bg-blue-500 text-white text-2xl px-16 py-2 rounded-md"
+            type="submit"
+          >
             save
           </button>
         </Transition.Child>
-      </div>
+      </form>
     </Transition>
   );
 };

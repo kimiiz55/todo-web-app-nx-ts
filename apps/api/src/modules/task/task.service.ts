@@ -9,7 +9,7 @@ export class TaskService {
   constructor(@InjectModel(Task.name) private taskModel: Model<TaskDocument>) {}
 
   async findAll(): Promise<Task[]> {
-    return this.taskModel.find().exec();
+    return this.taskModel.find().sort({ isCompleted: 'asc', dueDate: 'asc', }).exec();
   }
 
   async create(dto: CreateOrUpdateTaskDto): Promise<Task> {
