@@ -1,5 +1,6 @@
-export const fetcher = (...args) => {
-  const [url] = args;
+import fetch from 'isomorphic-unfetch'
 
-  return fetch(url).then((res) => res.json());
+export const fetcher = (...args) => {
+
+  return fetch(...args).then((res) => res.json());
 };

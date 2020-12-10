@@ -24,7 +24,7 @@ const FormModal = () => {
           leave="transition ease-in-expo duration-300"
           leaveFrom="transform translate-y-0"
           leaveTo="transform translate-y-full"
-          className="block align-bottom bg-white text-left overflow-hidden shadow-xl lg:w-3/4 lg:max-w-lg pb-20 z-20 min-h-screen mx-auto"
+          className="block align-bottom bg-white text-left overflow-hidden shadow-xl w-screen lg:w-3/4 lg:max-w-lg pb-20 z-20 min-h-screen mx-auto"
         >
           <div className="sticky top-0 bg-white px-4 py-3">
             <div className="flex items-center">
@@ -61,7 +61,7 @@ const FormModal = () => {
           leave="transition ease-in-expo duration-200"
           leaveFrom="transform opacity-100 translate-y-0"
           leaveTo="transform opacity-75 translate-y-20"
-          className="fixed bottom-0 lg:w-3/4 lg:max-w-lg px-4 py-4 border-t border-gray-200 bg-white z-20"
+          className="fixed bottom-0 w-screen lg:w-3/4 lg:max-w-lg px-4 py-4 border-t border-gray-200 bg-white z-20"
         >
           <button className="bg-blue-500 text-white text-2xl px-16 py-2 rounded-md">
             save

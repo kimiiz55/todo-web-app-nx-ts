@@ -16,7 +16,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
     <AppProvider>
       <SWRConfig
         value={{
-          refreshInterval: 3000,
+          refreshInterval: 0,
           fetcher: fetcher
         }}
       >
