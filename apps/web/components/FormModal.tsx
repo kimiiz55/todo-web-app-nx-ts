@@ -57,6 +57,7 @@ const FormModal = () => {
       <form
         className="flex flex-col items-center justify-center min-h-screen text-center"
         onSubmit={handleSubmit(onSubmit)}
+        id="form-modal"
       >
         <Transition.Child
           enter="transition ease-in-expo duration-300"
@@ -103,7 +104,7 @@ const FormModal = () => {
                 placeholder="john@example.com"
               />
               {errors.title && (
-                <span className="text-base text-red-400">
+                <span className="text-base text-red-400" id="reqired-title">
                   This field is required
                 </span>
               )}
@@ -118,7 +119,7 @@ const FormModal = () => {
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
               {errors.dueDate && (
-                <span className="text-base text-red-400">
+                <span className="text-base text-red-400" id="reqired-due-date">
                   This field is required
                 </span>
               )}
@@ -137,6 +138,7 @@ const FormModal = () => {
           <button
             className="bg-blue-500 text-white text-2xl px-16 py-2 rounded-md"
             type="submit"
+            id="form-modal-submit-button"
           >
             save
           </button>
