@@ -25,17 +25,17 @@ export class TaskController {
     return this.taskService.create(dto);
   }
 
-  @Patch('/:id')
+  @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.taskService.findOneById(id);
   }
 
-  @Patch('/:id')
+  @Patch(':id')
   async update(@Body() dto: CreateOrUpdateTaskDto, @Param('id') id: string) {
     return this.taskService.update(id, dto);
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   async delete(@Param('id') id) {
     await this.taskService.delete(id);
   }
