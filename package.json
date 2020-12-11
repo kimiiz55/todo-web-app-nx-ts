@@ -44,6 +44,7 @@
     "isomorphic-unfetch": "^3.1.0",
     "mongoose": "^5.11.5",
     "next": "10.0.0",
+    "nx": "^10.4.7",
     "react": "17.0.1",
     "react-append-to-body": "^2.0.26",
     "react-dom": "17.0.1",
