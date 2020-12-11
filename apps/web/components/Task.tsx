@@ -1,85 +1,23 @@
 import { ITask } from '@todos/shared/interfaces';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useAppDispatch } from '../context/app';
 import { FORM_TYPE } from '../reducers/form';
 import { mutate } from 'swr';
 import classNames from 'classNames';
 import { mutateDeleteTask, mutateUpdateTask } from '../lib/mutate';
-import dayjs from 'dayjs';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-
-dayjs.extend(localizedFormat);
+import { CheckedIcon } from './CheckedIcon';
+import { CheckIcon } from './CheckIcon';
+import { DeleteIcon } from './DeleteIcon';
 
 interface IProps {
   task: ITask;
 }
 
-const CheckedIcon = () => (
-  <div
-    className="w-12 h-12 inline-flex items-center justify-cent text-green-500 bg-green-100 px-2 rounded-full"
-    id="checked-icon"
-  >
-    <svg
-      className="w-8 h-8"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-        clipRule="evenodd"
-      />
-    </svg>
-  </div>
-);
-
-const CheckIcon = ({ handleClick }) => (
-  <div
-    className="w-12 h-12 inline-flex items-center justify-cent text-green-500 hover:bg-green-500 hover:text-white px-2 rounded-full cursor-pointer"
-    onClick={handleClick}
-    id="check-icon"
-  >
-    <svg
-      className="w-8 h-8"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-        clipRule="evenodd"
-      />
-    </svg>
-  </div>
-);
-
-const DeleteIcon = ({ handleClick }) => (
-  <div
-    className="w-12 h-12 inline-flex items-center justify-cent text-red-500 hover:bg-red-500 hover:text-white px-2 rounded-full cursor-pointer"
-    onClick={handleClick}
-    id="delete-icon"
-  >
-    <svg
-      className="w-8 h-8"
-      fill="currentColor"
-      viewBox="0 0 20 20"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-        clipRule="evenodd"
-      />
-    </svg>
-  </div>
-);
 
 export const Task: React.FC<IProps> = ({ task }) => {
   const dispatch = useAppDispatch();
 
-  const handleCheck = async (e) => {
+  const handleCheck = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation(); // Prevents further propagation of the current event in the bubbling phase
 
     mutate('/api/tasks', async (tasks: ITask[]) =>
@@ -90,7 +28,7 @@ export const Task: React.FC<IProps> = ({ task }) => {
     );
   };
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation(); // Prevents further propagation of the current event in the bubbling phase
 
     mutate('/api/tasks', async (tasks: ITask[]) =>
@@ -120,21 +58,13 @@ export const Task: React.FC<IProps> = ({ task }) => {
           </p>
         </div>
         <div className="flex flex-row space-x-2 flex-none">
-          <span
-            className={classNames({
-              hidden: !task.isCompleted,
-            })}
-          >
-            <CheckedIcon />
-          </span>
-          <span
-            className={classNames({
-              hidden: task.isCompleted,
-            })}
-          >
-            <CheckIcon handleClick={handleCheck} />
-            <DeleteIcon handleClick={handleDelete} />
-          </span>
+          {task.isCompleted && <CheckedIcon />}
+          {!task.isCompleted && (
+            <Fragment>
+              <CheckIcon handleClick={handleCheck} />
+              <DeleteIcon handleClick={handleDelete} />
+            </Fragment>
+          )}
         </div>
       </div>
     </li>

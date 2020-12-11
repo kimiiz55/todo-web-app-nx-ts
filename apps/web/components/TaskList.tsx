@@ -8,18 +8,18 @@ export const TaskList = () => {
 
   if (!tasks) {
     return (
-      <ul className="flex flex-col space-y-2">
-        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
-        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
-        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
-        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
-        <div className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+      <ul className="flex flex-col space-y-2" id="tasks-loading">
+        <li className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+        <li className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+        <li className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+        <li className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
+        <li className="px-4 py-2 rounded-md shadow-sm h-12 animate-pulse bg-gray-100" />
       </ul>
     );
   }
 
   return (
-    <ul className="flex flex-col space-y-2">
+    <ul className="flex flex-col space-y-2" id="tasks-list">
       {tasks.map((task) => (
         <Task task={task} key={task._id} />
       ))}

@@ -1,4 +1,5 @@
 module.exports = {
+  "types": ["node", "jest", "@testing-library/jest-dom"],
   projects: [
     '<rootDir>/apps/api',
     '<rootDir>/apps/web',
