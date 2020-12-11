@@ -8,12 +8,51 @@ Simple Todo Web Appliction
 
 ## :cloud: Installation
 
-```sh
+```bash
 git clone https://github.com/kimiiz55/todo-web-app-nx-ts
+
 cd todo-web-app-nx-ts
+
 npm i
 
+```
+
+## Running the app
+
+```bash
+# Running Front-End
+npm run start web
+
+# Running Back-End
+npm run start api
+
+# Running parallel Front-End and Back-End
 npm run nx -- run-many --target=serve --projects=api,web --parallel --maxParallel=2
+```
+
+## Unit Test
+
+```bash
+# testing Front-End
+npm run test web
+
+# testing Back-End
+npm run test api
+
+# Parallel testing
+npm run nx -- run-many --target=test --projects=api,web --parallel --maxParallel=2
+```
+
+
+## E2E Testing
+
+```bash
+
+# start Back-End first
+npm run start api
+
+# Running Front-End E2e with Cypress
+npm run e2e web-e2e
 
 ```
 
