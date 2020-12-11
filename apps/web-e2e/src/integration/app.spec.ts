@@ -57,11 +57,11 @@ describe('web', () => {
   it('checked', () => {
     cy.get(`li[id="${taskTitle}"]`).children('#checked-icon').should('not.exist')
 
-    cy.get(`li[id="${taskTitle}"]`).children().get('#delete-icon')
-    cy.get(`li[id="${taskTitle}"]`).children().get('#check-icon').click()
+    cy.get(`li[id="${taskTitle}"]`).children().get('#delete-button')
+    cy.get(`li[id="${taskTitle}"]`).children().get('#check-button').click()
 
-    cy.get(`li[id="${taskTitle}"]`).children('#delete-icon').should('not.exist')
-    cy.get(`li[id="${taskTitle}"]`).children('#check-icon').should('not.exist')
+    cy.get(`li[id="${taskTitle}"]`).children('#delete-button').should('not.exist')
+    cy.get(`li[id="${taskTitle}"]`).children('#check-button').should('not.exist')
 
 
     cy.get(`li[id="${taskTitle}"]`).children().get('#checked-icon')
@@ -70,8 +70,8 @@ describe('web', () => {
   it('undo', () => {
 
     cy.get(`li[id="${taskTitle}"]`).children().get('#checked-icon')
-    cy.get(`li[id="${taskTitle}"]`).children('#delete-icon').should('not.exist')
-    cy.get(`li[id="${taskTitle}"]`).children('#check-icon').should('not.exist')
+    cy.get(`li[id="${taskTitle}"]`).children('#delete-button').should('not.exist')
+    cy.get(`li[id="${taskTitle}"]`).children('#check-button').should('not.exist')
 
     cy.get('form[id="form-modal"]').should('not.exist')
     cy.get(`li[id="${taskTitle}"]`).click()
@@ -82,8 +82,8 @@ describe('web', () => {
 
     cy.get('form[id="form-modal"]').should('not.exist')
 
-    cy.get(`li[id="${taskTitle}"]`).children().get('#delete-icon')
-    cy.get(`li[id="${taskTitle}"]`).children().get('#check-icon')
+    cy.get(`li[id="${taskTitle}"]`).children().get('#delete-button')
+    cy.get(`li[id="${taskTitle}"]`).children().get('#check-button')
     cy.get(`li[id="${taskTitle}"]`).children('#checked-icon').should('not.exist')
     
   });
@@ -111,7 +111,7 @@ describe('web', () => {
 
     cy.get(`li[id="${taskTitleEdited}"]`)
     
-    cy.get(`li[id="${taskTitleEdited}"]`).children().get('#delete-icon').click()
+    cy.get(`li[id="${taskTitleEdited}"]`).children().get('#delete-button').click()
 
     cy.get(`li[id="${taskTitleEdited}"]`).should('not.exist')
   });

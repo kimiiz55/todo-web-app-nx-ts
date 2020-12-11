@@ -1,7 +1,7 @@
 import { ITask } from '@todos/shared/interfaces';
 import React from 'react';
 import { mutate } from 'swr';
-import { mutateUpdateTask } from '../lib/mutate';
+import { mutateUpdateTask } from '../lib/mutate-utils';
 
 interface IProp {
   taskId: string;
@@ -9,7 +9,7 @@ interface IProp {
 
 export const CheckButton: React.FC<IProp> = ({ taskId }) => {
   const handleClick = async (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation(); // Prevents further propagation of the current event in the bubbling phase
 
@@ -22,10 +22,10 @@ export const CheckButton: React.FC<IProp> = ({ taskId }) => {
   };
 
   return (
-    <div
+    <button
       className="w-12 h-12 inline-flex items-center justify-cent text-green-500 hover:bg-green-500 hover:text-white px-2 rounded-full cursor-pointer"
       onClick={handleClick}
-      id="check-icon"
+      id="check-button"
     >
       <svg
         className="w-8 h-8"
@@ -39,6 +39,6 @@ export const CheckButton: React.FC<IProp> = ({ taskId }) => {
           clipRule="evenodd"
         />
       </svg>
-    </div>
+    </button>
   );
 };

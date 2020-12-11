@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { ITask } from '@todos/shared/interfaces';
 import dayjs from 'dayjs';
 import { mutate } from 'swr';
-import { mutateCreateTask, mutateUpdateTask } from '../lib/mutate';
+import { mutateCreateTask, mutateUpdateTask } from '../lib/mutate-utils';
 import { UndoButton } from './undo-button';
 
 interface IFormData {

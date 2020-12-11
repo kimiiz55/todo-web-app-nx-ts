@@ -2,7 +2,7 @@ import { ITask } from '@todos/shared/interfaces';
 import React from 'react';
 import { mutate } from 'swr';
 import { useAppDispatch } from '../context/app';
-import { mutateUpdateTask } from '../lib/mutate';
+import { mutateUpdateTask } from '../lib/mutate-utils';
 import { FORM_TYPE } from '../reducers/form';
 
 interface IProp {

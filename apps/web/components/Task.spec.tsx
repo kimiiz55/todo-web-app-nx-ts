@@ -49,7 +49,7 @@ describe('Task', () => {
       const { baseElement, container } = render(<Task task={task} />);
       expect(baseElement).toBeTruthy();
   
-      const checkIcon = container.querySelector('#check-icon');
+      const checkIcon = container.querySelector('#check-button');
   
       expect(checkIcon).toBeInTheDocument();
     });
@@ -64,7 +64,7 @@ describe('Task', () => {
       const { baseElement, container } = render(<Task task={task} />);
       expect(baseElement).toBeTruthy();
   
-      const checkIcon = container.querySelector('#check-icon');
+      const checkIcon = container.querySelector('#check-button');
   
       expect(checkIcon).not.toBeInTheDocument();
     });
@@ -81,7 +81,7 @@ describe('Task', () => {
       const { baseElement, container } = render(<Task task={task} />);
       expect(baseElement).toBeTruthy();
   
-      const deleteIcon = container.querySelector('#delete-icon');
+      const deleteIcon = container.querySelector('#delete-button');
   
       expect(deleteIcon).toBeInTheDocument();
     });
@@ -96,7 +96,7 @@ describe('Task', () => {
       const { baseElement, container } = render(<Task task={task} />);
       expect(baseElement).toBeTruthy();
   
-      const deleteIcon = container.querySelector('#delete-icon');
+      const deleteIcon = container.querySelector('#delete-button');
   
       expect(deleteIcon).not.toBeInTheDocument();
     });

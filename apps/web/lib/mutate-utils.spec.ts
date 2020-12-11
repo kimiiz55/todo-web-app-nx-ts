@@ -1,4 +1,4 @@
-import { mutateCreateTask, mutateDeleteTask, mutateUpdateTask } from './mutate';
+import { mutateCreateTask, mutateDeleteTask, mutateUpdateTask } from './mutate-utils';
 
 import * as api from './api';
 import { ITask } from '@todos/shared/interfaces';

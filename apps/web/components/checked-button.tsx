@@ -1,9 +1,10 @@
 import React from 'react';
 
 export const CheckedIcon = () => (
-  <div
+  <button
     className="w-12 h-12 inline-flex items-center justify-cent text-green-500 bg-green-100 px-2 rounded-full"
     id="checked-icon"
+    disabled={true}
   >
     <svg
       className="w-8 h-8"
@@ -17,5 +18,5 @@ export const CheckedIcon = () => (
         clipRule="evenodd"
       />
     </svg>
-  </div>
+  </button>
 );
