@@ -1,9 +1,26 @@
-# Todos
+# Todo Web App FullStack TypeScript
 
-This project was generated using [Nx](https://nx.dev).
+Simple Todo Web Appliction 
 
-## Running unit tests
+- front-end - [Next.js](https://nextjs.org)
+- back-end - [Nest.js](https://nestjs.com)
+- database - [mongodb](https://www.mongodb.com/)
 
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+## :cloud: Installation
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+```sh
+git clone https://github.com/kimiiz55/todo-web-app-nx-ts
+cd todo-web-app-nx-ts
+npm i
+
+npm run nx -- run-many --target=serve --projects=api,web --parallel --maxParallel=2
+
+```
+
+
+## Features
+
+- Create a task
+- Mark as completed
+- Delete a task
+- Undo a task
