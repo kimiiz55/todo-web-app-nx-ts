@@ -13,17 +13,19 @@ interface IFormData {
   _id?: string;
   title: string;
   dueDate: Date;
+  isCompleted: boolean;
 }
 
 const FormModal = () => {
   const { form } = useAppContext();
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit, errors, reset } = useForm<IFormData>({
+  const { register, handleSubmit, errors, reset, watch } = useForm<IFormData>({
     defaultValues: {
       _id: null,
       title: '',
       dueDate: null,
+      isCompleted: false,
     },
   });
 
@@ -48,6 +50,17 @@ const FormModal = () => {
       }
       return mutateCreateTask(tasks, formData);
     }).then(() => {
+      dispatch({ type: FORM_TYPE.CLOSE });
+    });
+  };
+
+  const onUndo = () => {
+    mutate('/api/tasks', async (tasks: ITask[]) =>
+      mutateUpdateTask(tasks, {
+        taskId: form._id,
+        formData: { isCompleted: false },
+      })
+    ).then(() => {
       dispatch({ type: FORM_TYPE.CLOSE });
     });
   };
@@ -109,7 +122,6 @@ const FormModal = () => {
                 </span>
               )}
             </label>
-            {/* include validation with required or other standard HTML validation rules */}
             <label className="block">
               <span className="text-gray-700">I want to do this task on</span>
               <input
@@ -133,14 +145,24 @@ const FormModal = () => {
           leave="transition ease-in-expo duration-200"
           leaveFrom="transform opacity-100 translate-y-0"
           leaveTo="transform opacity-75 translate-y-20"
-          className="fixed bottom-0 w-screen lg:w-3/4 lg:max-w-lg px-4 py-4 border-t border-gray-200 bg-white z-20"
+          className="fixed bottom-0 w-screen lg:w-3/4 lg:max-w-lg px-4 py-4 border-t border-gray-200 bg-white z-20 space-x-2"
         >
+          {form.method === FORM_METHOD.UPDATE && watch('isCompleted') && (
+            <button
+              type="button"
+              className="bg-yellow-500 text-white  text-2xl px-16 py-2 rounded-md mx-auto"
+              onClick={onUndo}
+              id="undo-task"
+            >
+              UNDO
+            </button>
+          )}
           <button
             className="bg-blue-500 text-white text-2xl px-16 py-2 rounded-md"
             type="submit"
             id="form-modal-submit-button"
           >
-            save
+            SAVE
           </button>
         </Transition.Child>
       </form>
