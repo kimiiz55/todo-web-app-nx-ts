@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ITask } from '@todos/shared/interfaces';
-import { Task } from '../components/task';
+import { Task } from './task';
 import useSWR from 'swr';
 
 export const TaskList = () => {

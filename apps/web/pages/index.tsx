@@ -1,6 +1,6 @@
 import React from 'react';
-import { AddTaskButton } from '../components/AddTaskButton';
-import { TaskList } from '../components/TaskList';
+import { AddTaskButton } from '../components/add-task-button';
+import { TaskList } from '../components/task-list';
 
 const Index = () => {
   return (

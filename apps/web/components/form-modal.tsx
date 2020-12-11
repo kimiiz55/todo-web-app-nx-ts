@@ -8,6 +8,7 @@ import { ITask } from '@todos/shared/interfaces';
 import dayjs from 'dayjs';
 import { mutate } from 'swr';
 import { mutateCreateTask, mutateUpdateTask } from '../lib/mutate';
+import { UndoButton } from './undo-button';
 
 interface IFormData {
   _id?: string;
@@ -50,17 +51,6 @@ const FormModal = () => {
       }
       return mutateCreateTask(tasks, formData);
     }).then(() => {
-      dispatch({ type: FORM_TYPE.CLOSE });
-    });
-  };
-
-  const onUndo = () => {
-    mutate('/api/tasks', async (tasks: ITask[]) =>
-      mutateUpdateTask(tasks, {
-        taskId: form._id,
-        formData: { isCompleted: false },
-      })
-    ).then(() => {
       dispatch({ type: FORM_TYPE.CLOSE });
     });
   };
@@ -148,14 +138,7 @@ const FormModal = () => {
           className="fixed bottom-0 w-screen lg:w-3/4 lg:max-w-lg px-4 py-4 border-t border-gray-200 bg-white z-20 space-x-2"
         >
           {form.method === FORM_METHOD.UPDATE && watch('isCompleted') && (
-            <button
-              type="button"
-              className="bg-yellow-500 text-white  text-2xl px-16 py-2 rounded-md mx-auto"
-              onClick={onUndo}
-              id="undo-task"
-            >
-              UNDO
-            </button>
+            <UndoButton taskId={form._id} />
           )}
           <button
             className="bg-blue-500 text-white text-2xl px-16 py-2 rounded-md"

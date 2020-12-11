@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { SWRConfig } from 'swr';
 import { fetcher } from '../lib/fetcher';
 
-const FormModal = dynamic(() => import('../components/FormModal'), {
+const FormModal = dynamic(() => import('../components/form-modal'), {
   ssr: false,
 });
 
