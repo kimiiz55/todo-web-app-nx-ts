@@ -2,6 +2,11 @@
   "name": "todos",
   "version": "0.0.0",
   "license": "MIT",
+  "author": {
+    "name": "Kimiiz Pongnares Chuthong",
+    "email": "pongnares.ct@gmail.com",
+    "url": "https://www.linkedin.com/in/kimiiz-pongnares-6137a213b"
+  },
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
