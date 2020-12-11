@@ -1,11 +1,24 @@
-import React from 'react'
+import { ITask } from '@todos/shared/interfaces';
+import React from 'react';
+import { mutate } from 'swr';
+import { mutateDeleteTask } from '../lib/mutate';
 
 interface IProp {
-    handleClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  taskId: string;
 }
 
+export const DeleteButton: React.FC<IProp> = ({ taskId }) => {
+  const handleClick = async (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.stopPropagation(); // Prevents further propagation of the current event in the bubbling phase
 
-export const DeleteIcon: React.FC<IProp> = ({ handleClick }) => (
+    mutate('/api/tasks', async (tasks: ITask[]) =>
+      mutateDeleteTask(tasks, { taskId })
+    );
+  };
+
+  return (
     <div
       className="w-12 h-12 inline-flex items-center justify-cent text-red-500 hover:bg-red-500 hover:text-white px-2 rounded-full cursor-pointer"
       onClick={handleClick}
@@ -25,3 +38,4 @@ export const DeleteIcon: React.FC<IProp> = ({ handleClick }) => (
       </svg>
     </div>
   );
+};
